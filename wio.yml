@@ -1,0 +1,38 @@
+pkg:
+  name: wlib-memory
+  description: Static memory manager for WLib
+  repository: ""
+  version: 1.0.0
+  author: Jeff Niu <jeffniu22@gmail.com> (https://github.com/mogball)
+  contributors: []
+  organization: Waterloop
+  keywords:
+  - wio
+  - c
+  - c++
+  - memory
+  - embedded
+  - waterloop
+  license: MIT
+  header_only: false
+  platform: ALL
+  framework:
+  - ALL
+  board:
+  - ALL
+  compile_flags: []
+  ide: none
+
+targets:
+  default: tests
+  create:
+    tests:
+      board: uno
+      target_compile_flags: []
+      pkg_compile_flags: []
+
+dependencies:
+  wlib-tlsf:
+    version: latest
+    vendor: false
+    compile_flags: []
