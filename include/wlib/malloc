@@ -1,0 +1,6 @@
+#ifndef __WLIB_MALLOC__
+#define __WLIB_MALLOC__
+
+#include <wlib/mem/Malloc.h>
+
+#endif

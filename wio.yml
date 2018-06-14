@@ -1,7 +1,7 @@
 pkg:
-  name: wlib-memory
-  description: Static memory manager for WLib
-  repository: ""
+  name: wlib-malloc
+  description: Replacements for malloc and free
+  repository: "https://github.com/waterloop/wlib-malloc.git"
   version: 1.0.0
   author: Jeff Niu <jeffniu22@gmail.com> (https://github.com/mogball)
   contributors: []
@@ -20,17 +20,8 @@ pkg:
   - ALL
   board:
   - ALL
-  - uno
   compile_flags: []
   ide: none
-
-targets:
-  default: tests
-  create:
-    tests:
-      board: uno
-      target_compile_flags: []
-      pkg_compile_flags: []
 
 dependencies:
   wlib-tlsf:
