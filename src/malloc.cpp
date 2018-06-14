@@ -1,16 +1,16 @@
 #include <wlib/tlsf>
-#include <wlib/memory>
+
+#include <wlib/mem/Malloc.h>
 
 #include "config.h"
 
-static byte s_pool[POOL_SIZE];
 static tlsf_t s_tlsf = nullptr;
 
 using namespace wlp;
 
-bool meminit() {
+bool meminit(void *mem, size_t size) {
     if (s_tlsf) { return true; }
-    s_tlsf = tlsf_create_with_pool(s_pool, POOL_SIZE);
+    s_tlsf = tlsf_create_with_pool(mem, size);
     return s_tlsf != nullptr;
 }
 

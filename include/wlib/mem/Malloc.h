@@ -5,7 +5,7 @@
 
 namespace wlp {
 
-    extern bool meminit();
+    extern bool meminit(void *mem, size_t size);
 
     extern void *malloc(size_t bytes);
     extern void *memalign(size_t align, size_t bytes);
