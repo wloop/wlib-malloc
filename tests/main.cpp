@@ -1,15 +1,22 @@
-#include <Cosa/Trace.hh>
-#include <Cosa/UART.hh>
+#include "internal.h"
 
-void setup() {
-    uart.begin(19200);
-    trace.begin(&uart);
+#include <wlib/malloc>
 
-    trace << "PROGRAM START" << endl;
+using namespace wlp;
+
+static constexpr size_t POOL_SIZE = 1 << 12;
+static byte s_pool[POOL_SIZE];
+
+int main(int argc, char *argv[]) {
+    status stat = ok;
+
+    if (!mem::init(s_pool, POOL_SIZE))
+    { stat = error; }
+
+    auto *data = reinterpret_cast<char *>(mem::alloc(128));
+    if (nullptr == data)
+    { stat = error; }
+    mem::free(data);
+
+    return stat;
 }
-
-void loop() {
-    delay(200);
-    trace << "Beep" << endl;
-}
-

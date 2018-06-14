@@ -13,8 +13,6 @@ ehthumbs.db
 Thumbs.db
 
 # Windows
-Thumbs.db
-ehthumbs.db
 ehthumbs_vista.db
 [Dd]esktop.ini
 
@@ -36,3 +34,6 @@ ehthumbs_vista.db
 *.so
 *.dylib
 *.dll
+
+.idea/
+cmake-build-debug/
