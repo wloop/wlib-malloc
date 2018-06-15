@@ -1,7 +1,7 @@
 #ifndef __WLIB_MALLOC_MALLOC_H__
 #define __WLIB_MALLOC_MALLOC_H__
 
-#include <stdint.h>
+#include <stddef.h>
 
 namespace wlp {
     namespace mem {

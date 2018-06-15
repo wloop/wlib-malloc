@@ -2,7 +2,7 @@
 
 #include <wlib/malloc>
 #include <wlib/byte>
-#include <wlib/static_pool>
+#include <wlib/pool>
 
 using namespace wlp;
 
