@@ -31,3 +31,9 @@ void *wlp::mem::realloc(void *ptr, size_t size) {
 void wlp::mem::free(void *ptr) {
     return tlsf_free(s_tlsf, ptr);
 }
+
+bool wlp::mem::deinit() {
+    tlsf_destroy(s_tlsf);
+    s_tlsf = nullptr;
+    return true;
+}

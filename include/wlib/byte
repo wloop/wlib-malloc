@@ -1,0 +1,6 @@
+#ifndef __WLIB_MEMORY_BYTE__
+#define __WLIB_MEMORY_BYTE__
+
+#include <wlib/mem/Byte.h>
+
+#endif
