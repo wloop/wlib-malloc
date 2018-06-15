@@ -1,6 +1,0 @@
-#ifndef __WLIB_MEMORY_STATICPOOL__
-#define __WLIB_MEMORY_STATICPOOL__
-
-#include <wlib/mem/StaticPool.h>
-
-#endif
