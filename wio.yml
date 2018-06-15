@@ -2,7 +2,7 @@ pkg:
   name: wlib-malloc
   description: Replacements for malloc and free
   repository: "https://github.com/waterloop/wlib-malloc.git"
-  version: 1.0.0
+  version: 1.0.1
   author: Jeff Niu <jeffniu22@gmail.com> (https://github.com/mogball)
   contributors: []
   organization: Waterloop
@@ -25,6 +25,6 @@ pkg:
 
 dependencies:
   wlib-tlsf:
-    version: latest
+    version: 1.0.1
     vendor: false
     compile_flags: []
