@@ -12,10 +12,10 @@ file(GLOB_RECURSE WLIB_TLSF_FILES ${WLIB_TLSF_SRC}/* ${WLIB_TLSF_INCLUDE_DIR}/*)
 add_library(wlib-tlsf ${WLIB_TLSF_FILES})
 target_include_directories(wlib-tlsf PRIVATE ${WLIB_TLSF_INCLUDE_DIR})
 target_compile_definitions(wlib-tlsf PRIVATE
-    WLIB_TLSF_32BIT
-    WLIB_TLSF_LOG2_ALIGN=2
+    WLIB_TLSF_64BIT
+    WLIB_TLSF_LOG2_ALIGN=3
     WLIB_TLSF_LOG2_DIV=3
-    WLIB_TLSF_LOG2_MAX=12
+    WLIB_TLSF_LOG2_MAX=13
     WLIB_TLSF_DEBUG_LEVEL=1
 )
 
@@ -37,10 +37,10 @@ target_include_directories(wlib-malloc PRIVATE
 target_link_libraries(wlib-malloc wlib-tlsf)
 
 file(GLOB_RECURSE TEST_FILES
-    tests/*.h
-    tests/*.cpp
+    unit/*.h
+    unit/*.cpp
     )
 
-add_executable(tests ${TEST_FILES})
-target_link_libraries(tests wlib-malloc)
-target_include_directories(tests PRIVATE ${WLIB_MALLOC_INCLUDE_DIR})
+add_executable(unit ${TEST_FILES})
+target_link_libraries(unit wlib-malloc)
+target_include_directories(unit PRIVATE ${WLIB_MALLOC_INCLUDE_DIR})

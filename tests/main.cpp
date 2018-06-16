@@ -1,30 +1,31 @@
-#include "internal.h"
+#include <Cosa/UART.hh>
 
-#include <wlib/malloc>
-#include <wlib/byte>
-#include <wlib/pool>
+#include <stdio.h>
+#include <stdarg.h>
 
-using namespace wlp;
+static char buffer[64];
+static int wrt;
 
-static constexpr size_t POOL_SIZE = 1 << 12;
-static byte s_pool[POOL_SIZE];
-static static_pool<512> s_static_pool;
+void tlsf_printf(const char *str, ...) {
+    va_list args;
+    va_start(args, str);
+    int num = vsprintf(buffer, str, args);
+    if (num >= 0) { uart.write(buffer, num); }
+    va_end(args);
+}
 
-int main(int argc, char *argv[]) {
-    status stat = ok;
+void tlsf_assert(bool expr, const char *msg) {
+    if (expr) { uart.write(msg, strlen(msg)); }
+}
 
-    if (!mem::init(s_pool, POOL_SIZE))
-    { stat = error; }
+void setup() {
+    uart.begin(9600);
+    wrt = sprintf(buffer, "%s\n", "Hello");
+    uart.write(buffer, wrt);
+}
 
-    auto *data = reinterpret_cast<char *>(mem::alloc(128));
-    if (nullptr == data)
-    { stat = error; }
-    mem::free(data);
-
-    auto *ptr = s_static_pool.calloc(64);
-    if (nullptr == ptr)
-    { stat = error; }
-    s_static_pool.free(ptr);
-
-    return stat;
+void loop() {
+    delay(500);
+    wrt = sprintf(buffer, "%s\n", "Beep");
+    uart.write(buffer, wrt);
 }
