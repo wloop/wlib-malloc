@@ -20,7 +20,6 @@ pkg:
   - ALL
   board:
   - ALL
-  - mega2560
   compile_flags: []
   ide: none
 
@@ -29,8 +28,7 @@ targets:
   create:
     tests:
       board: mega2560
-      target_compile_flags:
-      - -DWLIB_AVR_DEBUG
+      target_compile_flags: []
       pkg_compile_flags: []
 
 dependencies:
