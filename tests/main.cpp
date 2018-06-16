@@ -22,13 +22,21 @@ void tlsf_printf(const char *str, ...) {
 }
 
 void tlsf_assert(bool expr, const char *msg) {
-    if (expr) { uart.write(msg, strlen(msg)); }
+    int wrt = sprintf(buffer, "%s\n", msg);
+    if (!expr) { uart.write(buffer, wrt); }
 }
 
 void setup() {
-    wlp::mem::init(pool, POOL_SIZE);
+    uart.begin(9600);    
+    
+    if (wlp::mem::init(pool, POOL_SIZE)) {
+        wrt = sprintf(buffer, "%s\n", "Created memory");
+        uart.write(buffer, wrt);
+    } else {
+        wrt = sprintf(buffer, "%s\n", "Failed to create memory\n");
+        uart.write(buffer, wrt);
+    }
 
-    uart.begin(9600);
     wrt = sprintf(buffer, "%s\n", "Hello");
     uart.write(buffer, wrt);
 }
@@ -36,9 +44,13 @@ void setup() {
 void loop() {
     wrt = snprintf(nullptr, 0, "Counter: %i\n", count);
     memory = static_cast<char *>(wlp::mem::alloc(wrt + 1));
-    sprintf(memory, "Counter: %i\n", count);
-    uart.write(memory, wrt);
+    if (nullptr == memory) 
+    { uart.write("NULL", 5); }
+    else {
+        sprintf(memory, "Counter: %i\n", count);
+        uart.write(memory, wrt);
+    }
     wlp::mem::free(memory);
-    delay(1000);
-    count += 16;
+    delay(50);
+    count += 16 * 16;
 }
