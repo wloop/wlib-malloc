@@ -35,7 +35,7 @@ targets:
 
 dependencies:
   wlib-tlsf:
-    version: 1.0.1
+    version: 1.0.2
     vendor: false
     compile_flags:
     - -DWLIB_TLSF_16BIT
