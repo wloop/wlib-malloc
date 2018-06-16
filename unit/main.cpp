@@ -1,5 +1,6 @@
 #include "internal.h"
 
+#include <stdio.h>
 #include <wlib/malloc>
 #include <wlib/byte>
 #include <wlib/pool>
@@ -11,6 +12,7 @@ static byte s_pool[POOL_SIZE];
 static static_pool<1024> s_static_pool;
 
 int main(int argc, char *argv[]) {
+    printf("Testing... ");
     status stat = ok;
 
     if (!mem::init(s_pool, POOL_SIZE))
@@ -26,5 +28,6 @@ int main(int argc, char *argv[]) {
     { stat = error; }
     s_static_pool.free(ptr);
 
+    printf("done - %s\n", stat ? "ERROR" : "OK");
     return stat;
 }
