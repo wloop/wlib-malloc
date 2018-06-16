@@ -1,30 +1,56 @@
-#include "internal.h"
+#include <Cosa/UART.hh>
+
+#include <stdio.h>
+#include <stdarg.h>
 
 #include <wlib/malloc>
-#include <wlib/byte>
-#include <wlib/pool>
 
-using namespace wlp;
+enum { POOL_SIZE = 1024 };
 
-static constexpr size_t POOL_SIZE = 1 << 12;
-static byte s_pool[POOL_SIZE];
-static static_pool<512> s_static_pool;
+static char pool[POOL_SIZE];
+static char buffer[64];
+static char *memory;
+static int wrt;
+static int count;
 
-int main(int argc, char *argv[]) {
-    status stat = ok;
+void tlsf_printf(const char *str, ...) {
+    va_list args;
+    va_start(args, str);
+    int num = vsprintf(buffer, str, args);
+    if (num >= 0) { uart.write(buffer, num); }
+    va_end(args);
+}
 
-    if (!mem::init(s_pool, POOL_SIZE))
-    { stat = error; }
+void tlsf_assert(bool expr, const char *msg) {
+    int wrt = sprintf(buffer, "%s\n", msg);
+    if (!expr) { uart.write(buffer, wrt); }
+}
 
-    auto *data = reinterpret_cast<char *>(mem::alloc(128));
-    if (nullptr == data)
-    { stat = error; }
-    mem::free(data);
+void setup() {
+    uart.begin(9600);    
+    
+    if (wlp::mem::init(pool, POOL_SIZE)) {
+        wrt = sprintf(buffer, "%s\n", "Created memory");
+        uart.write(buffer, wrt);
+    } else {
+        wrt = sprintf(buffer, "%s\n", "Failed to create memory\n");
+        uart.write(buffer, wrt);
+    }
 
-    auto *ptr = s_static_pool.calloc(64);
-    if (nullptr == ptr)
-    { stat = error; }
-    s_static_pool.free(ptr);
+    wrt = sprintf(buffer, "%s\n", "Hello");
+    uart.write(buffer, wrt);
+}
 
-    return stat;
+void loop() {
+    wrt = snprintf(nullptr, 0, "Counter: %i\n", count);
+    memory = static_cast<char *>(wlp::mem::alloc(wrt + 1));
+    if (nullptr == memory) 
+    { uart.write("NULL", 5); }
+    else {
+        sprintf(memory, "Counter: %i\n", count);
+        uart.write(memory, wrt);
+    }
+    wlp::mem::free(memory);
+    delay(50);
+    count += 16 * 16;
 }
