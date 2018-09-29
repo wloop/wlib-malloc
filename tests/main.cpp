@@ -27,8 +27,8 @@ void tlsf_assert(bool expr, const char *msg) {
 }
 
 void setup() {
-    uart.begin(9600);    
-    
+    uart.begin(9600);
+
     if (wlp::mem::init(pool, POOL_SIZE)) {
         wrt = sprintf(buffer, "%s\n", "Created memory");
         uart.write(buffer, wrt);
@@ -44,7 +44,7 @@ void setup() {
 void loop() {
     wrt = snprintf(nullptr, 0, "Counter: %i\n", count);
     memory = static_cast<char *>(wlp::mem::alloc(wrt + 1));
-    if (nullptr == memory) 
+    if (nullptr == memory)
     { uart.write("NULL", 5); }
     else {
         sprintf(memory, "Counter: %i\n", count);
