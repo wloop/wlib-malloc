@@ -2,7 +2,7 @@ type: pkg
 
 project:
   name: wlib-malloc
-  version: 1.0.2
+  version: 1.0.3
   description: Replacements for malloc and free
   repository: https://github.com/wloop/wlib-malloc.git
   author: Jeff Niu <jeffniu22@gmail.com> (https://github.com/mogball)
@@ -40,7 +40,7 @@ targets:
 
 dependencies:
   wlib-tlsf:
-    version: 1.0.3
+    version: 1.0.4
     definitions:
     - $(WLIB_TLSF_ARCH)
     - $(WLIB_TLSF_LOG2_DIV)
