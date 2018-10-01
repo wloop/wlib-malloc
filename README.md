@@ -5,7 +5,7 @@
 ### Install
 
 ```bash
-wio pac add wlib-malloc
+wio install wlib-malloc
 ```
 
 ### Usage
