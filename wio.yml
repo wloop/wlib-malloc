@@ -2,7 +2,7 @@ type: pkg
 
 project:
   name: wlib-malloc
-  version: 1.0.4
+  version: 1.0.5
   description: Replacements for malloc and free
   repository: https://github.com/wloop/wlib-malloc.git
   author: Jeff Niu <jeffniu22@gmail.com> (https://github.com/mogball)
@@ -13,21 +13,33 @@ project:
   - memory
   - embedded
   - waterloop
-  definitions:
-      singleton: false
-      required:
-        private:
-        - WLIB_TLSF_ARCH
-        - WLIB_TLSF_LOG2_DIV
-        - WLIB_TLSF_LOG2_ALIGN
-        - WLIB_TLSF_LOG2_MAX
   compile_options:
-    wio_version: 0.4.0
-    default_target: tests
+    wio_version: 0.6.0
+    default_target: cosa-tests
+  definitions:
+    required:
+      private:
+      - WLIB_TLSF_ARCH
+      - WLIB_TLSF_LOG2_DIV
+      - WLIB_TLSF_LOG2_ALIGN
+      - WLIB_TLSF_LOG2_MAX
+      optional:
+      - WLIB_TLSF_PRINTF
+      - WLIB_TLSF_ASSERT
 
 targets:
-  tests:
-    src: tests
+  native-tests:
+    src: tests/native
+    platform: native
+    definitions:
+      package:
+      - WLIB_TLSF_ARCH=64
+      - WLIB_TLSF_LOG2_DIV=4
+      - WLIB_TLSF_LOG2_ALIGN=3
+      - WLIB_TLSF_LOG2_MAX=14
+      - WLIB_TLSF_PRINTF
+  cosa-tests:
+    src: tests/cosa
     platform: avr
     framework: cosa
     board: mega2560
@@ -37,21 +49,14 @@ targets:
       - WLIB_TLSF_LOG2_DIV=3
       - WLIB_TLSF_LOG2_ALIGN=1
       - WLIB_TLSF_LOG2_MAX=11
-  native-tests:
-    src: native-tests
-    platform: native
-    definitions:
-      package:
-      - WLIB_TLSF_ARCH=64
-      - WLIB_TLSF_LOG2_DIV=4
-      - WLIB_TLSF_LOG2_ALIGN=3
-      - WLIB_TLSF_LOG2_MAX=14
-
+      - WLIB_TLSF_ASSERT
 dependencies:
   wlib-tlsf:
-    version: 1.0.5
+    version: 1.0.6
     definitions:
     - $(WLIB_TLSF_ARCH)
     - $(WLIB_TLSF_LOG2_DIV)
     - $(WLIB_TLSF_LOG2_ALIGN)
     - $(WLIB_TLSF_LOG2_MAX)
+    - $optional(WLIB_TLSF_PRINTF)
+    - $optional(WLIB_TLSF_ASSERT)
